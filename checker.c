@@ -1,18 +1,17 @@
 #include <stdio.h>
 #include <assert.h>
 
+int Check(float Value, float MinValue, float MaxValue, char *ErrMsg){
+    char Ret = 0;
+    if(!(Ret = ((Value >= MinValue) && (Value <= MaxValue)) ? 1: 0))
+        printf("%s\n", ErrMsg);
+    
+    return Ret;
+}
+
+
 int batteryIsOk(float temperature, float soc, float chargeRate) {
-  if(temperature < 0 || temperature > 45) {
-    printf("Temperature out of range!\n");
-    return 0;
-  } else if(soc < 20 || soc > 80) {
-    printf("State of Charge out of range!\n");
-    return 0;
-  } else if(chargeRate > 0.8) {
-    printf("Charge Rate out of range!\n");
-    return 0;
-  }
-  return 1;
+  return Check(temperature, 0, 45, "Temperature out of range!\n") + Check(soc, 20, 80, "State of Charge out of range!\n") + Check(chargeRate, 0, 0.8, "Charge Rate out of range!\n") ? 1 : 0;
 }
 
 int main() {
